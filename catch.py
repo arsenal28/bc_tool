@@ -1,15 +1,14 @@
-from urllib import urlopen
 import requests
-from bs4 import BeautifulSoup
-import sys
-import xlwt
-import xlrd
-
-s = requests.session()
-user='sjb'
-pwd='AA18B9EE69F51D49F0AE8045CDA69FB6'
-para = {'username':user,'verifyCode':'','verifySMSVerifyCode':'','authCode':pwd}
-url = 'http://192.168.63.43/login'
-r =s.post(url, data=para)
-print(r.text)
-#soup = BeautifulSoup(r.text,'html.parser')
+import json
+login_url="http://bc.fjgdwl.net/login"
+s=requests.session()
+data={   
+    "sessionId":"0",
+    "username":"sjb",
+    "verifyCode":"",
+    "verifySMSVerifyCode":"",
+    "authCode":"AA18B9EE69F51D49F0AE8045CDA69FB6"
+    }
+r=requests.get(login_url)
+response=s.post(login_url,data=json.dumps(data))
+print(response.text)
