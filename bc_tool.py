@@ -18,18 +18,21 @@ headers = {'content-type': 'application/json'}  # payload请求方式
 response=session.post(login_url,data=json.dumps(data),headers=headers)
 print(response.text)
 #coding:UTF-8
-
+if len(sys.argv) < 3:
+    print ('输入参数太少！  输入格式如下 python bc_tool.py 2018-02-18 2018-02-24.')
+    sys.exit()
 start_date = sys.argv[1]
 end_date = sys.argv[2]
 start_dt = str(start_date)+" "+"00:00:00"
-end_dt = str(end_date)+" "+"00:00:00"
+end_dt = str(end_date)+" "+"23:59:59"
 #转换成时间数组
 start_timeArray = time.strptime(start_dt, "%Y-%m-%d %H:%M:%S")
 end_timeArray = time.strptime(end_dt, "%Y-%m-%d %H:%M:%S")
-
 #转换成时间戳
 start_timestamp = str(int(time.mktime(start_timeArray)))
 end_timestamp = str(int(time.mktime(end_timeArray)))
+
+report_period = str(start_timeArray[1])+'月'+str(start_timeArray[2])+'日'+'-'+str(end_timeArray[1])+'月'+str(end_timeArray[2])+'日'
 
 #print(start_timestamp)
 #print(end_timestamp)
@@ -69,7 +72,7 @@ bc_sheet.write_merge(1, 1, 10, 11, '网宿出口',style)
 bc_sheet.write_merge(1, 1, 12, 13, '福州分公司企舜混合出口',style)
 bc_sheet.write_merge(1, 1, 14, 15, '福州分公司华数混合出口',style)
 bc_sheet.write_merge(1, 2, 1, 1, '分公司',style)
-bc_sheet.write_merge(3, 12, 0, 0, '月几日',style)
+bc_sheet.write_merge(3, 12, 0, 0, report_period,style)
 x=2
 while x<=14:
     bc_sheet.write(2 ,x,'平均',style)
@@ -135,8 +138,8 @@ for row in range(nrows):
 
     retVal = (r.json()['results'].get(start_timestamp))
     ret_sourceNode = retVal[0].get('sourceNodeId')
-    qualityAVG = round(retVal[0].get('meanQuality_AVG'),2)
-    print('%.2f'% qualityAVG)
+    qualityAVG = round(retVal[0].get('meanQuality_AVG'),1)
+    #print('%.2f'% qualityAVG)
     bc_sheet.write(cell_row,cell_col,qualityAVG)
 
     payload_busy = {
@@ -170,7 +173,7 @@ for row in range(nrows):
 
     retVal = (r.json()['results'].get(start_timestamp))
     ret_sourceNode = retVal[0].get('sourceNodeId')
-    qualityAVG = round(retVal[0].get('meanQuality_AVG'),2)
-    print('%.2f'% qualityAVG)
+    qualityAVG = round(retVal[0].get('meanQuality_AVG'),1)
+    #print('%.2f'% qualityAVG)
     bc_sheet.write(cell_row,cell_col+1,qualityAVG)
 bc_book.save('bc_report.xls')
