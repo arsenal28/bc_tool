@@ -1,9 +1,11 @@
+# -*- coding: UTF-8 -*-
 import requests
 import json
 import xlrd
 import xlwt
-import time
+import time,datetime
 import sys
+import shutil
 login_url="http://bc.fjgdwl.net/login"
 session=requests.session()
 data={   
@@ -18,16 +20,22 @@ headers = {'content-type': 'application/json'}  # payload请求方式
 response=session.post(login_url,data=json.dumps(data),headers=headers)
 print(response.text)
 #coding:UTF-8
-if len(sys.argv) < 3:
-    print ('输入参数太少！  输入格式如下 python bc_tool.py 2018-02-18 2018-02-24.')
+if (len(sys.argv) != 3) and (len(sys.argv) != 1):
+    print ('输入参数错误！  输入格式如下 python bc_tool.py 20180218 20180224.')
     sys.exit()
-start_date = sys.argv[1]
-end_date = sys.argv[2]
+if (len(sys.argv) == 1):
+    end_date= time.strftime("%Y%m%d")
+    print(end_date)
+    start_date = (datetime.datetime.today() - datetime.timedelta(days=6)).strftime("%Y%m%d")
+    print(start_date)
+if (len(sys.argv) == 3):
+    start_date = sys.argv[1]
+    end_date = sys.argv[2]
 start_dt = str(start_date)+" "+"00:00:00"
 end_dt = str(end_date)+" "+"23:59:59"
 #转换成时间数组
-start_timeArray = time.strptime(start_dt, "%Y-%m-%d %H:%M:%S")
-end_timeArray = time.strptime(end_dt, "%Y-%m-%d %H:%M:%S")
+start_timeArray = time.strptime(start_dt, "%Y%m%d %H:%M:%S")
+end_timeArray = time.strptime(end_dt, "%Y%m%d %H:%M:%S")
 #转换成时间戳
 start_timestamp = str(int(time.mktime(start_timeArray)))
 end_timestamp = str(int(time.mktime(end_timeArray)))
@@ -89,7 +97,8 @@ bc_sheet.write(10,1,'龙岩',style)
 bc_sheet.write(11,1,'三明',style)
 bc_sheet.write(12,1,'南平',style)
 
-
+first_col=bc_sheet.col(0)
+first_col.width=256*20
 ################################################################################################
 for row in range(nrows):
     #print(row)
@@ -176,4 +185,7 @@ for row in range(nrows):
     qualityAVG = round(retVal[0].get('meanQuality_AVG'),1)
     #print('%.2f'% qualityAVG)
     bc_sheet.write(cell_row,cell_col+1,qualityAVG)
-bc_book.save('bc_report.xls')
+report_name = 'bc_report_'+start_date+'-'+end_date+'.xls'
+bc_book.save(report_name)
+report_name_with_path = '/var/www/html/zhoubao/'+report_name
+shutil.copyfile(report_name,report_name_with_path)
