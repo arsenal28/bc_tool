@@ -77,8 +77,8 @@ bc_sheet.write_merge(1, 1, 4, 5, '省联通出口',style)
 bc_sheet.write_merge(1, 1, 6, 7, '华数出口',style)
 bc_sheet.write_merge(1, 1, 8, 9, '东方网信出口',style)
 bc_sheet.write_merge(1, 1, 10, 11, '网宿出口',style)
-bc_sheet.write_merge(1, 1, 12, 13, '福州分公司企舜混合出口',style)
-bc_sheet.write_merge(1, 1, 14, 15, '福州分公司华数混合出口',style)
+bc_sheet.write_merge(1, 1, 12, 13, '福州分公司'+'\n'+'企舜混合出口',style)
+bc_sheet.write_merge(1, 1, 14, 15, '福州分公司'+'\n'+'华数混合出口',style)
 bc_sheet.write_merge(1, 2, 1, 1, '分公司',style)
 bc_sheet.write_merge(3, 12, 0, 0, report_period,style)
 x=2
@@ -187,5 +187,5 @@ for row in range(nrows):
     bc_sheet.write(cell_row,cell_col+1,qualityAVG)
 report_name = 'bc_report_'+start_date+'-'+end_date+'.xls'
 bc_book.save(report_name)
-report_name_with_path = '/var/www/html/zhoubao/'+report_name
-shutil.copyfile(report_name,report_name_with_path)
+#report_name_with_path = '/var/www/html/zhoubao/'+report_name
+#shutil.copyfile(report_name,report_name_with_path)
