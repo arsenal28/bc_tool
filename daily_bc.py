@@ -48,7 +48,7 @@ response=session.post(login_url,data=json.dumps(data),headers=headers)
 print(response.text)
 #coding:UTF-8
 if (len(sys.argv) != 3) and (len(sys.argv) != 1):
-    print ('输入参数错误！  无需参数')
+    print ('输入参数错误！  无需参数！！')
     sys.exit()
 if (len(sys.argv) == 3):
     start_date = sys.argv[1]
