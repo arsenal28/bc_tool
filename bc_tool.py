@@ -24,9 +24,9 @@ if (len(sys.argv) != 3) and (len(sys.argv) != 1):
     print ('输入参数错误！  输入格式如下 python bc_tool.py 20180218 20180224.')
     sys.exit()
 if (len(sys.argv) == 1):
-    end_date= time.strftime("%Y%m%d")
+    end_date= (datetime.datetime.today() - datetime.timedelta(days=1)).strftime("%Y%m%d")
     print(end_date)
-    start_date = (datetime.datetime.today() - datetime.timedelta(days=6)).strftime("%Y%m%d")
+    start_date = (datetime.datetime.today() - datetime.timedelta(days=7)).strftime("%Y%m%d")
     print(start_date)
 if (len(sys.argv) == 3):
     start_date = sys.argv[1]
@@ -146,6 +146,7 @@ for row in range(nrows):
     r = session.get("http://bc.fjgdwl.net/getDataReportResult", params=payload,headers=headers)
 
     retVal = (r.json()['results'].get(start_timestamp))
+    print(retVal)
     ret_sourceNode = retVal[0].get('sourceNodeId')
     qualityAVG = round(retVal[0].get('meanQuality_AVG'),1)
     #print('%.2f'% qualityAVG)
@@ -179,8 +180,8 @@ for row in range(nrows):
         'reportFlag':'true'
     }
     r = session.get("http://bc.fjgdwl.net/getDataReportResult", params=payload_busy,headers=headers)
-
     retVal = (r.json()['results'].get(start_timestamp))
+    print(retVal)
     ret_sourceNode = retVal[0].get('sourceNodeId')
     qualityAVG = round(retVal[0].get('meanQuality_AVG'),1)
     #print('%.2f'% qualityAVG)

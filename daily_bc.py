@@ -7,7 +7,7 @@ import time,datetime
 import sys
 import shutil
 
-source_ids= [35095,37728,35093,37724,35091,35090,35094]
+source_ids= [35095,37728,35093,37724,35091,35090,35094,38535]
 
 DEST_NODES='34888,35073,35039,34914,35063,35061,35045,35054,35058,35056,\
 35044,34893,35020,35029,34910,34945,34940,34995,34997,34878,\
@@ -74,7 +74,7 @@ bc_sheet = bc_book.add_sheet('daily_bc', cell_overwrite_ok=True)
 font = xlwt.Font() # Create the Font
 font.name = u'微软雅黑'
 font.bold = True
-font.height = 280
+font.height = 240
 borders = xlwt.Borders()
 borders.left = xlwt.Borders.THIN
 borders.right = xlwt.Borders.THIN
@@ -88,22 +88,22 @@ style = xlwt.XFStyle()
 style.alignment = alignment # Add Alignment to Style
 style.font = font
 style.borders = borders
-bc_sheet.write_merge(0, 0, 0, 7, '第三方出口TOP1000网站综合质量',style)
+bc_sheet.write_merge(0, 0, 0, 8, '第三方出口TOP1000网站综合质量',style)
 bc_sheet.write(1, 0, '时间',style)
 bc_sheet.write(1, 1, '闽侯电信'+'\n'+'集客宽带',style)
-bc_sheet.write(1, 2, '省联通'+'\n'+'出口',style)
-bc_sheet.write(1, 3, '网宿'+'\n'+'出口',style)
-bc_sheet.write(1, 4, '福州分公司'+'\n'+'华数混合'+'\n'+'出口',style)
-bc_sheet.write(1, 5, '福州分公司'+'\n'+'企舜混合'+'\n'+'出口',style)
-bc_sheet.write(1, 6, '华数'+'\n'+'出口',style)
-bc_sheet.write(1, 7, '东方网信'+'\n'+'出口',style)
-
+bc_sheet.write(1, 2, '省联通'+'\n',style)
+bc_sheet.write(1, 3, '网宿'+'\n',style)
+bc_sheet.write(1, 4, '福州分公司'+'\n'+'华数混口',style)
+bc_sheet.write(1, 5, '福州分公司'+'\n'+'企舜混口',style)
+bc_sheet.write(1, 6, '华数'+'\n',style)
+bc_sheet.write(1, 7, '东方网信'+'\n',style)
+bc_sheet.write(1, 8, '寰宇鸿通'+'\n',style)
 first_col=bc_sheet.col(0)
 first_col.width=256*18
 first_row=bc_sheet.row(1)
 #sec_row.height=256*10
-for i in range(1,8):
-    bc_sheet.col(i).width=256*15
+for i in range(1,9):
+    bc_sheet.col(i).width=256*13
 tall_style = xlwt.easyxf('font:height 720;') # 36pt
 first_row.set_style(tall_style)
 ################################################################################################
