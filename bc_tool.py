@@ -79,10 +79,11 @@ bc_sheet.write_merge(1, 1, 8, 9, '东方网信出口',style)
 bc_sheet.write_merge(1, 1, 10, 11, '网宿出口',style)
 bc_sheet.write_merge(1, 1, 12, 13, '福州分公司'+'\n'+'企舜混合出口',style)
 bc_sheet.write_merge(1, 1, 14, 15, '福州分公司'+'\n'+'华数混合出口',style)
+bc_sheet.write_merge(1, 1, 16, 17, '寰宇鸿通出口',style)
 bc_sheet.write_merge(1, 2, 1, 1, '分公司',style)
 bc_sheet.write_merge(3, 12, 0, 0, report_period,style)
 x=2
-while x<=14:
+while x<=16:
     bc_sheet.write(2 ,x,'平均',style)
     bc_sheet.write(2 ,x+1,'忙时',style)
     x+=2
